@@ -24,10 +24,6 @@ Route::get('/login', '\App\Http\Controllers\LoginController@index');
 Route::post('/login', '\App\Http\Controllers\LoginController@login');
 // Logout Action
 Route::get('/logout', '\App\Http\Controllers\LoginController@logout');
-// User setting
-Route::get('/user/me/setting', '\App\Http\Controllers\UserController@setting');
-// User setting action
-Route::post('/user/me/setting', '\App\Http\Controllers\UserController@settingStore');
 
 /**
  * indexPage
@@ -54,3 +50,12 @@ Route::post('image/upload', '\App\Http\Controllers\PostControllers@imageUpload')
 // Search
 Route::get('/articles/search', '\App\Http\Controllers\PostControllers@search');
 Route::post('/articles/search', '\App\Http\Controllers\PostControllers@search');
+
+// 个人中心
+Route::get('/user/{user}', '\App\Http\Controllers\UserController@show');
+Route::post('/user/{user}/fan', '\App\Http\Controllers\UserController@fan');
+Route::post('/user/{user}/unfan', '\App\Http\Controllers\UserController@unfan');
+// User setting
+Route::get('/user/me/setting', '\App\Http\Controllers\UserController@setting');
+// User setting action
+Route::post('/user/me/setting', '\App\Http\Controllers\UserController@settingStore');

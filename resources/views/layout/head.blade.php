@@ -84,6 +84,18 @@
             padding: 0 16px 0 0;
         }
 
+        #userCardImg {
+            height: 210px;
+            width: 210px;
+        }
+
+        .user-img-shadow {
+            box-shadow: 0 4px 45px -8px rgba(0,0,0,.35)
+        }
+
+        .user-img-shadow-darkmode {
+            box-shadow: 0 4px 45px -8px rgba(255,255,255,.35)
+        }
 
         .comment-author {
             text-decoration-line: none;

@@ -24,6 +24,8 @@ class PostControllers extends Controller
         // withCount("comments") 获取文章的评论数
         $posts = Post::orderBy('created_at', 'desc')->withCount(['comments', 'zans'])->paginate(9);
 
+        // 
+
         //要传递的参数名尽量和参数名一致 (不理解算了)
         //使用compact 传递到页面上
         return view("post/index", compact('posts'));

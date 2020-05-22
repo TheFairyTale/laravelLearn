@@ -22,9 +22,16 @@
         @if ( \Auth::check() )
         <a href="javascript:;" class="mdui-btn mdui-btn-icon" style="margin-left: 8px;" mdui-menu="{target: '#userAction'}"><img class="mdui-img-circle" style="padding: 4px; width: 40px; height: 40px;" src="https://i1.hdslb.com/bfs/face/f469b49f73ee48147d0801b63f220a830dd051f6.jpg_64x64.jpg"></a>
         <ul class="mdui-menu" id="userAction">
-
+        
+            <li class="mdui-menu-item" disabled>
+                <a href="" class="mdui-ripple">{{ \Auth::user()->name }}</a>
+            </li>
+                <li class="mdui-divider"></li>
             <li class="mdui-menu-item">
-                <a href="/user/me/setting" class="mdui-ripple">{{ \Auth::user()->name }}</a>
+                <a href="/user/{{ \Auth::user()->id }}" class="mdui-ripple">Personal center</a>
+            </li>
+            <li class="mdui-menu-item">
+                <a href="/user/me/setting" class="mdui-ripple">Account setting</a>
             </li>
             <li class="mdui-menu-item">
                 <a href="/logout" class="mdui-ripple">Sign out</a>

@@ -131,14 +131,20 @@
                 // already was 0, normal mode
                 $$('body').removeClass('mdui-theme-layout-dark')
                 $$('body').removeClass('body-bg-remove-light')
+                $$('#userCardImg').removeClass('user-img-shadow-darkmode')
+                $$('#userCardImg').addClass('user-img-shadow')
             } else if (cookies.indexOf("dark=1") != -1 || cookies.indexOf(" dark=1") != -1) {
                 // already was 1, dark mode
                 $$('body').addClass('mdui-theme-layout-dark')
                 $$('body').addClass('body-bg-remove-light')
+                $$('#userCardImg').addClass('user-img-shadow-darkmode')
+                $$('#userCardImg').removeClass('user-img-shadow')
             } else {
                 // initial to 0, normal mode
                 $$('body').removeClass('mdui-theme-layout-dark')
                 $$('body').removeClass('body-bg-remove-light')
+                $$('#userCardImg').removeClass('user-img-shadow-darkmode')
+                $$('#userCardImg').addClass('user-img-shadow')
                 darkCookie = 0
             }
             break;
@@ -151,9 +157,13 @@
             if ($$('body').hasClass('mdui-theme-layout-dark')) {
                 document.cookie = " dark=" + escape(1) + "; path=" + escape('/')
                 $$('body').addClass('body-bg-remove-light')
+                $$('#userCardImg').addClass('user-img-shadow-darkmode')
+                $$('#userCardImg').removeClass('user-img-shadow')
             } else {
                 document.cookie = " dark=" + escape(0) + "; path=" + escape('/')
                 $$('body').removeClass('body-bg-remove-light')
+                $$('#userCardImg').removeClass('user-img-shadow-darkmode')
+                $$('#userCardImg').addClass('user-img-shadow')
             }
         }
 
