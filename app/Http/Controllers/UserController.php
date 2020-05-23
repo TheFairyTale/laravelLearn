@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 // 指定User 类为自创建的类
 use App\User;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,6 +14,7 @@ class UserController extends Controller
     public function setting(Post $post)
     {
         $user = \Auth::user();
+        //dd($user);
         return view('user.setting', compact(['post', 'user']));
     }
     // User setting store
@@ -33,11 +35,31 @@ class UserController extends Controller
             $user->name = $name;
         }
 
-        if ($request->file('avatar')) {
-            $path = $request
-                ->file('avatar')
-                ->storePublicly($user->id);
-            $user->avatar = "/storage/" . $path;
+        //dd(request());
+        // https://blog.csdn.net/qq_32723451/article/details/94721729
+        // https://blog.csdn.net/qq_27516777/article/details/79723057
+        //$fileName = request('avatarImg');
+        $file = $request->getBasePath();
+
+        dd($file);
+            if ($file->isValid()) {
+                // 获取扩展名
+                $ext = $file->getClientOriginalExtension();
+                if ($ext != "jpg" || $ext != "jpeg" || $ext != "png" || $ext != "gif" || $ext != "jfif" || $ext != "jpe") {
+                    return back()->isInvalid(); //"Upload error. not a picture.";
+                }
+                // 获取绝对路径
+                $path = $file->getRealPath();
+                // 重命名
+                //$filename = date('Y-m-d-h-i-s').'.'.$ext;
+                // TODO 哈希可能导致性能问题
+                $filename = bcrypt($file->getClientOriginalName()).'.'.$ext;
+                // 存储文件 调用disk 模块中 uploads
+                Storage::disk('uploads')->put($filename, file_get_contents($path));
+
+            //$file = $request->file('avatarImg');
+                //->store($user->id);
+            //$user->avatar = "/storage/" . $path;
         }
 
         $user->save();
@@ -53,7 +75,7 @@ class UserController extends Controller
         // 用户名
         // 头像
         // 关注, 粉丝, 文章
-        // 直接传入$user 就可以获取用户信息，但要想显示关注/粉丝等的数量，就需要withCount() 
+        // 直接传入$user 就可以获取用户信息，但要想显示关注/粉丝等的数量，就需要withCount()
         // 而withCount() 只能在数据库相关查找函数后使用，比如 "where()->withCount()"或
         // "orderBy()->withCount()" 等诸如此类
         // 所以不能直接使用, 需要重新定义一下User 模型， 使用find() 函数即可，和使用$user
@@ -63,18 +85,18 @@ class UserController extends Controller
             ->find($user->id);
 
         // 该用户的文章列表, 要只取创建时间最新的前10 条
-        // 
+        //
         // orderBy(要排序的字段, 排序方法) desc 是倒序排序。
         // take(int) 限制结果的返回数量, skip(int) 跳过指定数量的结果, 此处take(10) 是
         // 限制取出前十条结果
-        // get() 用于获取结果 
+        // get() 用于获取结果
         $post = $user->posts()
             ->orderBy('created_at', 'desc')
             ->take(10)
             ->get();
 
         // 该用户关注的用户, 返回该用户关注的每一个用户的信
-        // 息: 用户名, 关注, 粉丝，文章 
+        // 息: 用户名, 关注, 粉丝，文章
         $stars = $user->stars;
         $susers = User::whereIn('id', $stars->pluck('star_id'))
             ->withCount(['stars', 'fans', 'posts'])
@@ -94,7 +116,7 @@ class UserController extends Controller
             ->withCount(['stars', 'fans', 'posts'])
             ->get();
 
-        // 
+        //
 
         return view('user/show', compact(['post', 'user', 'susers', 'fusers']));
     }

@@ -31,8 +31,6 @@
                             <div class="mdui-list-item-text mdui-list-item-one-line">
                                 {{ $post->created_at }} by <a href="#user">{{ $post->user->name }}</a>  <i class="mdui-icon material-icons">&#xe8dc;</i>：{{ $post->zans_count }}, <i class="mdui-icon material-icons">&#xe0b9;</i>： {{ $post->comments_count }}
                             </div>
-                            <!-- 按现在的UI 暂时不显示评论数？ -->
-                            <!-- <div>Comments: {{ $post->comments_count }}</div> -->
                         </div>
                     </a>
                 </li>
@@ -45,7 +43,7 @@
         </div>
     </div>
     <div class=" mdui-col-xs-12" style="padding: 16px 0;">
-        <!-- 
+        <!--
     <nav>
         <ul class="pagination">
             <li class="page-item disabled" aria-disabled="true" aria-label="« Previous"><span class="page-link" aria-hidden="true">‹</span></li>
@@ -71,7 +69,7 @@
                 display: inline-block;
                 -webkit-transform: translateZ(0);
                 transform: translateZ(0);
-                
+
             }
 
             .page-item:hover {

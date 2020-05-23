@@ -120,14 +120,15 @@
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
         <h1 class="cover-heading">Hi, {{ \Auth::user()->name }}.</h1>
-        <form action="" method="POST">
+        <form action="/user/me/setting" method="POST">
             <!-- CSRF -->
+            @csrf
             <div class="form-group">
                 <label for="Username">Username</label>
                 <input type="text" class="form-control" name="name" id="Username" aria-describedby="" placeholder="Please enter your UserName" value="{{ \Auth::user()->name }}">
                 <div class="custom-file" style="margin-top: 10px;">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" name="avatar" value="" for="customFile">Click or tap to choose and change your avatar...</label>
+                    <input placeholder="Click or tap to choose and change your avatar..." name="avatarImg" type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" value="" for="customFile">Click or tap to choose and change your avatar...</label>
                 </div>
                 <img class="mr-2" src="" alt="" alt="Your avatar">
             </div>

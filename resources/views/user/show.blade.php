@@ -19,9 +19,61 @@
                     <a href="#following" class="mdui-ripple">Following</a>
                     <a href="#fans" class="mdui-ripple">Fans</a>
                 </div>
-                <div id="posts" class="mdui-p-a-2">article</div>
-                <div id="following" class="mdui-p-a-2">following</div>
-                <div id="fans" class="mdui-p-a-2">fans</div>
+                <div id="posts" class="mdui-p-a-2" style="padding-left: 0!important; padding-right: 0!important;">article</div>
+                <div id="following" class="mdui-p-a-2" style="padding-left: 0!important; padding-right: 0!important;">
+                    <ul class="mdui-list">
+                        <li class="mdui-list-item mdui-ripple">
+                            <div class="mdui-list-item-avatar"><img src="avatar1.jpg" /></div>
+                            <div class="mdui-list-item-content">
+                                <div class="mdui-list-item-title">Brunch this weekend?</div>
+                                <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">All Connors</span> - I'll be in your neighborhood ...</div>
+                            </div>
+                        </li>
+                        <li class="mdui-divider-inset mdui-m-y-0"></li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <div class="mdui-list-item-avatar"><img src="avatar2.jpg" /></div>
+                            <div class="mdui-list-item-content">
+                                <div class="mdui-list-item-title">Summer BBQ</div>
+                                <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">to Alex, Scott, Jennifer</span> - Wish I could ...</div>
+                            </div>
+                        </li>
+                        <li class="mdui-divider-inset mdui-m-y-0"></li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <div class="mdui-list-item-avatar"><img src="avatar3.jpg" /></div>
+                            <div class="mdui-list-item-content">
+                                <div class="mdui-list-item-title">Oui oui</div>
+                                <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">Sandra Adams</span> - Do you have Paris reco ...</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="fans" class="mdui-p-a-2" style="padding-left: 0!important; padding-right: 0!important;">
+                    <ul class="mdui-list">
+                        <li class="mdui-list-item mdui-ripple">
+                            <div class="mdui-list-item-avatar"><img src="avatar1.jpg" /></div>
+                            <div class="mdui-list-item-content">
+                                <div class="mdui-list-item-title">Brunch this weekend?</div>
+                                <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">All Connors</span> - I'll be in your neighborhood ...</div>
+                            </div>
+                        </li>
+                        <li class="mdui-divider-inset mdui-m-y-0"></li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <div class="mdui-list-item-avatar"><img src="avatar2.jpg" /></div>
+                            <div class="mdui-list-item-content">
+                                <div class="mdui-list-item-title">Summer BBQ</div>
+                                <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">to Alex, Scott, Jennifer</span> - Wish I could ...</div>
+                            </div>
+                        </li>
+                        <li class="mdui-divider-inset mdui-m-y-0"></li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <div class="mdui-list-item-avatar"><img src="avatar3.jpg" /></div>
+                            <div class="mdui-list-item-content">
+                                <div class="mdui-list-item-title">Oui oui</div>
+                                <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">Sandra Adams</span> - Do you have Paris reco ...</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

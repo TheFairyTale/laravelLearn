@@ -23,15 +23,15 @@ class PostControllers extends Controller
         //获取文章 (模型查找) Descending 降序排列
         // withCount("comments") 获取文章的评论数
         $posts = Post::orderBy('created_at', 'desc')->withCount(['comments', 'zans'])->paginate(9);
+        $request = request();
 
-        // 
 
         //要传递的参数名尽量和参数名一致 (不理解算了)
         //使用compact 传递到页面上
-        return view("post/index", compact('posts'));
+        return view("post/index", compact(['posts', 'request']));
     }
     //详情界面
-    //TO DO 此处传参的原理究竟是什么？
+    // TODO 此处传参的原理究竟是什么？
     public function show(Post $post)
     {
         // 在渲染模板前加载所有评论 (comments), 而不是在渲染模板时去访问数据库来加载评论(MVC思想)
@@ -60,11 +60,11 @@ class PostControllers extends Controller
 
         //Request 所有请求  all 所有参数  request() 也是获取所有参数  request('arg') 获取指定参数
         //dd => dump and die 直接打印数据并结束运行
-        //尽量使用dd，与原生函数vardump 相比, dd 会格式化输出的数据, 而原生函数可能会造成页面崩溃 
+        //尽量使用dd，与原生函数vardump 相比, dd 会格式化输出的数据, 而原生函数可能会造成页面崩溃
         //dd(\Request::all());
 
         //使用Post 中的create 方法(参数为Array) 创建文章，调用request 来获取上传的参数
-        //request 接受一个数组来指定想要返回的指定内容, 返回值类型为Array 
+        //request 接受一个数组来指定想要返回的指定内容, 返回值类型为Array
         // * 当一个函数参数要求为Array且使用的方法返回值也和它相同，就可以尽量简化代码，让函数输入=输出 （大概是这样）
 
         //此处是具体的操作逻辑(2)
@@ -160,7 +160,7 @@ class PostControllers extends Controller
             'content' => 'required|min:2',
         ]);
         // 逻辑
-        // 传递进来的参数是Post 的一个对象, 
+        // 传递进来的参数是Post 的一个对象,
         $comment = new Comment();
         // 将当前Post 对象的用户设置为发表评论的用户
         $comment->user_id = \Auth::id();
@@ -180,7 +180,7 @@ class PostControllers extends Controller
             'post_id' => $post->id,
         ];
         // 先查找表中是否有要添加的以上数据, 如已有记录，则返回已有记录; 否则创建记录 这样就不会重复创建数据
-        Zan::firstOrCreate($param); 
+        Zan::firstOrCreate($param);
         // 因为是使用get方式, 链接的形式，所以可以用back() 回退到上一个页面
         return back();
     }
@@ -191,7 +191,7 @@ class PostControllers extends Controller
         $post->zan(\Auth::id())->delete();
         return back();
     }
-    
+
     // Search result
     public function search(Post $post) {
         return view("post/search", compact('post'));
