@@ -16,7 +16,7 @@
                 @foreach($posts as $post)
                 <li class="mdui-list-item mdui-ripple">
 
-                    <a class="padding-for-avatar" href="#user">
+                    <a class="padding-for-avatar" href="/user/{{ $post->user->id }}">
                         <div class="mdui-list-item-avatar"><img src="https://i2.hdslb.com/bfs/face/a8cce402dd0db28838f18b82ae2783757504afc4.jpg@70w_70h_1c_100q.webp" />
                         </div>
                     </a>

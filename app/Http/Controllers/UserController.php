@@ -7,6 +7,7 @@ use App\Post;
 use App\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -38,10 +39,14 @@ class UserController extends Controller
         //dd(request());
         // https://blog.csdn.net/qq_32723451/article/details/94721729
         // https://blog.csdn.net/qq_27516777/article/details/79723057
-        //$fileName = request('avatarImg');
-        $file = $request->getBasePath();
-
-        dd($file);
+        $fileName = $request->file('avatarImg');
+        //$newImage = request('avatarImg')->face->store($fileName, 'face');
+//        $file = $request->getBasePath();
+        //dd(Storage::url ($newImage));
+        //Storage::putFile();
+        //$storaged = Storage::disk('local')->put($fileName,$resource);
+        dd($fileName);
+        dd(Storage::url($fileName));
             if ($file->isValid()) {
                 // 获取扩展名
                 $ext = $file->getClientOriginalExtension();
@@ -92,9 +97,10 @@ class UserController extends Controller
         // get() 用于获取结果
         $post = $user->posts()
             ->orderBy('created_at', 'desc')
-            ->take(10)
+            //->take(10)
             ->get();
 
+        // following
         // 该用户关注的用户, 返回该用户关注的每一个用户的信
         // 息: 用户名, 关注, 粉丝，文章
         $stars = $user->stars;
@@ -102,6 +108,7 @@ class UserController extends Controller
             ->withCount(['stars', 'fans', 'posts'])
             ->get();
 
+        // fans
         // 该用户的粉丝，返回该账户粉丝的 用户名，关注, 粉
         // 丝 文章数
         // $user->fans 获取的是这个用户的所有fans （粉丝）

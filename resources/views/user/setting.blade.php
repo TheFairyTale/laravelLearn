@@ -127,7 +127,7 @@
                 <label for="Username">Username</label>
                 <input type="text" class="form-control" name="name" id="Username" aria-describedby="" placeholder="Please enter your UserName" value="{{ \Auth::user()->name }}">
                 <div class="custom-file" style="margin-top: 10px;">
-                    <input placeholder="Click or tap to choose and change your avatar..." name="avatarImg" type="file" class="custom-file-input" id="customFile">
+                    <input placeholder="Click or tap to choose and change your avatar..." name="avatarImg" type="file" class="custom-file-input" id="avatarImg">
                     <label class="custom-file-label" value="" for="customFile">Click or tap to choose and change your avatar...</label>
                 </div>
                 <img class="mr-2" src="" alt="" alt="Your avatar">
