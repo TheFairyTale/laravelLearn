@@ -44,7 +44,7 @@
     <div class="mdui-col-md-3 mdui-col-sm-12">
         <div class="mdui-card">
             <ul class="mdui-list">
-                <a href="/user/{{ $post->user->name }}" target="_blank">
+                <a href="/user/{{ $post->user->id }}" target="_blank">
                     <li class="mdui-list-item mdui-ripple">
                         <div class="mdui-list-item-avatar"><img src="https://i1.hdslb.com/bfs/face/f469b49f73ee48147d0801b63f220a830dd051f6.jpg_64x64.jpg" />
                         </div>
@@ -102,8 +102,8 @@
                 <hr>
             </div>
             <div class="mdui-card-header">
-                <a class="comment-author" href="/user/{{ $comment->user->name }}" target="_blank">
-                    <img class="mdui-card-header-avatar" src="https://i1.hdslb.com/bfs/face/f469b49f73ee48147d0801b63f220a830dd051f6.jpg_64x64.jpg" />
+                <a class="comment-author" href="/user/{{ $comment->user->id }}" target="_blank">
+                    <img class="mdui-card-header-avatar" src="/user/{{ $post->user->avatar }}" />
                     <div class="mdui-card-header-title">{{ $comment->user->name }}</div>
                 </a>
                 <div class="mdui-card-header-subtitle">{{ $comment->created_at }}</div>
@@ -171,7 +171,7 @@
             </div>
             @include('layout/error')
             <div class="mdui-card-header" style="height: auto; padding: 16px 0 0 16px;">
-                <img class="mdui-card-header-avatar" src="https://i1.hdslb.com/bfs/face/f469b49f73ee48147d0801b63f220a830dd051f6.jpg_64x64.jpg" />
+                <img class="mdui-card-header-avatar" src="\Auth::user()->avatar" />
             </div>
             <div class="" style="margin: 0 16px 16px 52px; padding: 0 0 28px 16px;">
                 <form action="/posts/{{ $post->id }}/comment" method="POST">
