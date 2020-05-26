@@ -12,9 +12,23 @@
                 <div class="mdui-center mdui-text-center">
                     <p>{{ $user->email }}</p>
                     <p>Following: {{ $user->stars_count }} Fans: {{ $user->fans_count }} Articles: {{ $user->posts_count }} </p>
-                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple follow-like-btn {{ $user->id }}-follow" onclick="" type="">Follow</button>
-                    <!-- 尝试传入 token -->
-                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple follow-unlike-btn {{ $user->id }}-unfollow" onclick="ajax('', '', csrf_token)" type="">Unfollow</button>
+
+                    @if ( \Auth::check() )
+                    @if ( \Auth::user()->id == $user->id )
+                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onclick="" type="">Edit profile</button>
+                    @else
+
+                        @if ( \Auth::user()->hasStar($user->id) != 1 )
+                        <!-- hasn't followed -->
+                        <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onclick="" type="">Follow</button>
+                            @else
+                        <!-- has followed -->
+                        <!-- 尝试传入 token -->
+                        <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onclick="ajax('', '', csrf_token)" type="">Unfollow</button>
+                        @endif
+
+                    @endif
+                    @endif
                 </div>
 
             </div>
@@ -35,9 +49,16 @@
                                     <div class="mdui-list-item-title mdui-list-item-one-line">
                                         {{ $article->title }}
                                     </div>
-                                    <div class="mdui-list-item-text mdui-list-item-two-line" style="line-break: anywhere; -webkit-line-break: anywhere; display:block;">
-                                        {{ $article->content }}
-
+                                    <div class="mdui-list-item-text mdui-list-item-two-line" style="line-break: anywhere; -webkit-line-break: anywhere; display:block;" id="{{ $article->id }}">
+                                        <script>
+                                            var filterHTMLTags = function() {
+                                                var content = "{{ $article->content }}"
+                                                var regular_expressions = /&../g
+                                                content.replace(regular_expressions, '')
+                                                document.getElementById("{{ $article->id }}").innerText = content
+                                            }
+                                            filterHTMLTags()
+                                        </script>
                                     </div>
                                     <div class="mdui-list-item-text mdui-list-item-one-line mdui-text-right">
                                         {{ $article->created_at->diffForHumans() }}
@@ -48,7 +69,7 @@
                             @if ( \Auth::user()->id == $user->id )
                             <div class="mdui-valign " style="">
                                 <a href="/posts/articles/{{ $article->id }}/edit">
-                                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" type="">Edit this article</button>
+                                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" type="">Edit</button>
                                 </a>
                             </div>
                             @endif
