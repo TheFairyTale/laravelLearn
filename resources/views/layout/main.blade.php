@@ -151,6 +151,11 @@
         }
         console.log(darkCookie)
 
+        // init person center following & fans panel
+        var following = $$('.follow-like-btn')
+        following.hide()
+
+
         // change dark mode
         function changeDarkTheme() {
             $$('body').toggleClass('mdui-theme-layout-dark')
@@ -165,6 +170,45 @@
                 $$('#userCardImg').removeClass('user-img-shadow-darkmode')
                 $$('#userCardImg').addClass('user-img-shadow')
             }
+        }
+
+        /*
+        // 用于ajax 提交到后台所需的CSRF令牌
+        var list = {}
+        for (var index in cookies) {
+            list[index] = cookies[index]
+        }
+        var csrfStr = list[1]
+        var index = csrfStr.indexOf("=")
+        var csrf_token = csrfStr.substr(index + 1, csrfStr.length)
+        console.log(csrf_token)
+        //for(i = 0; i < cookies.length; i++) {
+        //
+        //      }
+        */
+
+        function ajax(url, data, csrf) {
+            $$.ajax({
+                method: 'POST',
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': csrf,
+                    //'X-XSRF-TOKEN': csrf_token,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                data: data,
+                success: function(result) {
+                    // returned: {"error":0,"msg":"Unfollowed","following":false}
+                    if (result["following"] == false) {
+                        console.log(result)
+
+                        mdui.snackbar(result["msg"])
+                    } else if (result["following"] == true) {
+                        console.log(result)
+                        mdui.snackbar(result["msg"])
+                    }
+                },
+            })
         }
 
         // 为页面加上颜色

@@ -28,8 +28,10 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="msapplication-config" content="">
     <meta name="theme-color" content="#2196f3">
-
-
+    <script>
+        // CSRF_Token
+        var csrf_token = '{{ csrf_token() }}'
+    </script>
     <style>
         body::before {
             position: fixed;
@@ -90,11 +92,11 @@
         }
 
         .user-img-shadow {
-            box-shadow: 0 4px 45px -8px rgba(0,0,0,.35)
+            box-shadow: 0 4px 45px -8px rgba(0, 0, 0, .35)
         }
 
         .user-img-shadow-darkmode {
-            box-shadow: 0 4px 45px -8px rgba(255,255,255,.35)
+            box-shadow: 0 4px 45px -8px rgba(255, 255, 255, .35)
         }
 
         .comment-author {

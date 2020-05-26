@@ -29,7 +29,7 @@
                                 {{ $post->content }}
                             </div>
                             <div class="mdui-list-item-text mdui-list-item-one-line">
-                                {{ $post->created_at }} by <a href="#user">{{ $post->user->name }}</a>  <i class="mdui-icon material-icons">&#xe8dc;</i>：{{ $post->zans_count }}, <i class="mdui-icon material-icons">&#xe0b9;</i>： {{ $post->comments_count }}
+                                {{ $post->created_at }} by <a href="/user/{{ $post->user->id }}">{{ $post->user->name }}</a>  <i class="mdui-icon material-icons">&#xe8dc;</i>：{{ $post->zans_count }}, <i class="mdui-icon material-icons">&#xe0b9;</i>： {{ $post->comments_count }}
                             </div>
                         </div>
                     </a>

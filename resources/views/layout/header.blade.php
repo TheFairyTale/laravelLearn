@@ -26,7 +26,7 @@
             <a href="javascript:;" class="mdui-btn mdui-btn-icon" style="margin-left: 8px;"
                mdui-menu="{target: '#userAction'}"><img class="mdui-img-circle"
                                                         style="padding: 4px; width: 40px; height: 40px;"
-                                                        src="https://i1.hdslb.com/bfs/face/f469b49f73ee48147d0801b63f220a830dd051f6.jpg_64x64.jpg"></a>
+                                                        src="{{ \Auth::user()->avatar }}"></a>
             <ul class="mdui-menu" id="userAction">
 
                 <li class="mdui-menu-item" disabled>
