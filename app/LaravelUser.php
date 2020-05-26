@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -20,7 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password'
     ];
-    
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -62,7 +63,7 @@ class User extends Authenticatable
         // $this->stars() 我关注的人
         // save() 保存一个模型(?)
         // new \App\Fan() 构建一个新的粉丝模型
-        // star_id 被关注人id 
+        // star_id 被关注人id
         $fan = new \App\Fan();
         $fan->star_id = $uid;
         // 保存
@@ -70,11 +71,28 @@ class User extends Authenticatable
     }
 
     // 取消关注
+    /*
     public function doUnFan($uid) {
         $fan = new \App\Fan();
         $fan->star_id = $uid;
         // 删除
         return $this->stars()->delete($fan);
+    }
+    */
+    public function doUnFan($star_uid, $user_id) {
+        $fan = new \App\Fan();
+        $fan->star_id = $star_uid;
+        //return dd($this);
+        // 删除
+        //return $this->stars()->where('star_id', '=', $uid)->delete();
+        //return dd($this->stars()); //->where('star_id', '=', 2);
+        //$result = DB::delete("select * from fans where fan_id = ".$user_id." and star_id = ".$star_uid.";");
+        //dd($result);
+        $result = DB::table('fans')->where([
+            ['fan_id', $user_id], 
+            ['star_id', $star_uid], 
+            ])->delete();
+        return dd($result);
     }
 
     // 当前用户是否被某uid 关注
@@ -82,7 +100,7 @@ class User extends Authenticatable
         // $this->fans() 获取当前用户的所有粉丝
         // count() 返回个数
         return $this->fans()->where(
-            'fan_id', 
+            'fan_id',
             $uid
         )->count();     // 有则返回正整数, 无则为 0
     }
@@ -90,7 +108,7 @@ class User extends Authenticatable
     // 当前用户是否关注了uid
     public function hasStar($uid) {
         return $this->stars()->where(
-            'star_id', 
+            'star_id',
             $uid
         )->count();
     }

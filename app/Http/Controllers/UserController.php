@@ -125,16 +125,36 @@ class UserController extends Controller
 
         //
 
+        $user->avatar = "/storage/ProfilePhoto.jpg";
+
         return view('user/show', compact(['post', 'user', 'susers', 'fusers']));
     }
 
     // follow user
-    public function fan()
-    {
+    public function fan(User $user) {
+        $currentUser = \Auth::user();
+        $currentUser->doFan($user->id);
+
+        return [
+            'error' => 0,
+            'msg' => 'Following',
+            'following' => true,
+        ];
     }
 
     // unfollow user
-    public function unfan()
-    {
+    public function unfan(User $user) {
+        // \Auth::user() 返回的是当前已登陆认证通过的用户
+        $currentUser = \Auth::user();
+        // 返回的是删除的数目: 3
+        return $currentUser->doUnFan($user->id, $currentUser->id);
+        //dd($user->stars());
+
+
+        return [
+            'error' => 0,
+            'msg' => 'Unfollowed',
+            'following' => false,
+        ];
     }
 }
