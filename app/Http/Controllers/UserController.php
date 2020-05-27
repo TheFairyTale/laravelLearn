@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use function GuzzleHttp\json_encode;
+
 class UserController extends Controller
 {
     // User setting page
@@ -39,34 +41,42 @@ class UserController extends Controller
         //dd(request());
         // https://blog.csdn.net/qq_32723451/article/details/94721729
         // https://blog.csdn.net/qq_27516777/article/details/79723057
-        $fileName = $request->file('avatarImg');
+        //$fileName = $request->file('avatarImg');
         //$newImage = request('avatarImg')->face->store($fileName, 'face');
-//        $file = $request->getBasePath();
+        //        $file = $request->getBasePath();
         //dd(Storage::url ($newImage));
         //Storage::putFile();
         //$storaged = Storage::disk('local')->put($fileName,$resource);
-        dd($fileName);
-        dd(Storage::url($fileName));
-            if ($file->isValid()) {
-                // 获取扩展名
-                $ext = $file->getClientOriginalExtension();
-                if ($ext != "jpg" || $ext != "jpeg" || $ext != "png" || $ext != "gif" || $ext != "jfif" || $ext != "jpe") {
-                    return back()->isInvalid(); //"Upload error. not a picture.";
-                }
-                // 获取绝对路径
-                $path = $file->getRealPath();
-                // 重命名
-                //$filename = date('Y-m-d-h-i-s').'.'.$ext;
-                // TODO 哈希可能导致性能问题
-                $filename = bcrypt($file->getClientOriginalName()).'.'.$ext;
-                // 存储文件 调用disk 模块中 uploads
-                Storage::disk('uploads')->put($filename, file_get_contents($path));
+        //dd($fileName);
+        //dd(Storage::url($fileName));
+        //$result = $request->image->store('images', 'public');
+        // store(要存储到的文件夹名)
+        $result = $request->file('avatarImg')->store("/"); //$request->headers; 
+        //dd($result);
 
-            //$file = $request->file('avatarImg');
-                //->store($user->id);
-            //$user->avatar = "/storage/" . $path;
+        //if ($result->isValid()) {
+        // 获取扩展名
+        //$ext = $result->getClientOriginalExtension();
+        /*
+        if ($ext != "jpg" || $ext != "jpeg" || $ext != "png" || $ext != "gif" || $ext != "jfif" || $ext != "jpe") {
+            return back()->isInvalid(); //"Upload error. not a picture.";
         }
+        */
+        // 获取绝对路径
+        //$path = $result->getRealPath();
+        // 重命名
+        //$filename = date('Y-m-d-h-i-s').'.'.$ext;
+        // TODO 哈希可能导致性能问题
+        //$filename = bcrypt($result->getClientOriginalName()) . '.' . $ext;
+        // 存储文件 调用disk 模块中 uploads
+        //Storage::disk('uploads')->put($result->, file_get_contents($path));
 
+        //$file = $request->file('avatarImg');
+        //->store($user->id);
+        //$user->avatar = "/storage/" . $path;
+        //}
+        // 保存图像地址到avatar 值中, 加上/storage/ 是用于能从链接访问
+        $user->avatar = "/storage/".$result;
         $user->save();
 
         // 渲染
@@ -125,36 +135,38 @@ class UserController extends Controller
 
         //
 
-        $user->avatar = "/storage/ProfilePhoto.jpg";
+        //$user->avatar = "/storage/ProfilePhoto.jpg";
 
         return view('user/show', compact(['post', 'user', 'susers', 'fusers']));
     }
 
     // follow user
-    public function fan(User $user) {
+    public function fan(User $user)
+    {
         $currentUser = \Auth::user();
         $currentUser->doFan($user->id);
 
-        return [
+        return json_encode([
             'error' => 0,
             'msg' => 'Following',
             'following' => true,
-        ];
+        ]);
     }
 
     // unfollow user
-    public function unfan(User $user) {
+    public function unfan(User $user)
+    {
         // \Auth::user() 返回的是当前已登陆认证通过的用户
         $currentUser = \Auth::user();
-        // 返回的是删除的数目: 3
-        return $currentUser->doUnFan($user->id, $currentUser->id);
+        // 返回的是删除的数目
+        $currentUser->doUnFan($user->id, $currentUser->id);
         //dd($user->stars());
 
 
-        return [
+        return json_encode([
             'error' => 0,
             'msg' => 'Unfollowed',
             'following' => false,
-        ];
+        ]);
     }
 }

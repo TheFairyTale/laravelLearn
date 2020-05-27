@@ -152,9 +152,8 @@
         console.log(darkCookie)
 
         // init person center following & fans panel
-        var following = $$('.follow-like-btn')
-        following.hide()
-
+        //var following = $$('.follow-like-btn')
+        //following.hide()
 
         // change dark mode
         function changeDarkTheme() {
@@ -172,22 +171,13 @@
             }
         }
 
-        /*
-        // 用于ajax 提交到后台所需的CSRF令牌
-        var list = {}
-        for (var index in cookies) {
-            list[index] = cookies[index]
+        function toggleFollowBtn(btnId, text) {
+            //btn.toggleClass(className)
+            console.log(btnId)
+            $$('.' + btnId).toggleClass("mdui-hidden")
         }
-        var csrfStr = list[1]
-        var index = csrfStr.indexOf("=")
-        var csrf_token = csrfStr.substr(index + 1, csrfStr.length)
-        console.log(csrf_token)
-        //for(i = 0; i < cookies.length; i++) {
-        //
-        //      }
-        */
 
-        function ajax(url, data, csrf) {
+        function ajax(url, dataIn, csrf) {
             $$.ajax({
                 method: 'POST',
                 url: url,
@@ -196,17 +186,31 @@
                     //'X-XSRF-TOKEN': csrf_token,
                     'X-Requested-With': 'XMLHttpRequest',
                 },
-                data: data,
-                success: function(result) {
-                    // returned: {"error":0,"msg":"Unfollowed","following":false}
-                    if (result["following"] == false) {
-                        console.log(result)
-
-                        mdui.snackbar(result["msg"])
-                    } else if (result["following"] == true) {
-                        console.log(result)
-                        mdui.snackbar(result["msg"])
+                data: dataIn,
+                dataType: 'json',
+                success: function(data, textStatus, xhr) {
+                    // data 为 AJAX 请求返回的数据
+                    // textStatus 为包含成功代码的字符串
+                    // xhr 为 XMLHttpRequest 对象
+                    switch (data["following"]) {
+                        case true:
+                            //console.log(result)
+                            toggleFollowBtn("follow-" + dataIn)
+                            toggleFollowBtn("unfollow-" + dataIn)
+                            mdui.snackbar(data["msg"])
+                            break;
+                        case false:
+                            //console.log(result)
+                            toggleFollowBtn("unfollow-" + dataIn)
+                            toggleFollowBtn("follow-" + dataIn)
+                            mdui.snackbar(data["msg"])
+                            break;
                     }
+                },
+                error: function(xhr, textStatus) {
+                    // xhr is XMLHttpRequest object
+                    // textStatus are error string
+                    mdui.snackbar(textStatus + ", maybe you need to reload this page?")
                 },
             })
         }

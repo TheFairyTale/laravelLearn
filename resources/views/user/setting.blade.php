@@ -120,19 +120,22 @@
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
         <h1 class="cover-heading">Hi, {{ \Auth::user()->name }}.</h1>
-        <form action="/user/me/setting" method="POST">
+        <form action="/user/me/setting" method="POST" enctype="multipart/form-data">
             <!-- CSRF -->
             @csrf
             <div class="form-group">
                 <label for="Username">Username</label>
                 <input type="text" class="form-control" name="name" id="Username" aria-describedby="" placeholder="Please enter your UserName" value="{{ \Auth::user()->name }}">
-                <div class="custom-file" style="margin-top: 10px;">
-                    <input placeholder="Click or tap to choose and change your avatar..." name="avatarImg" type="file" class="custom-file-input" id="avatarImg">
-                    <label class="custom-file-label" value="" for="customFile">Click or tap to choose and change your avatar...</label>
-                </div>
-                <img class="mr-2" src="" alt="" alt="Your avatar">
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <div class="custom-file" style="margin-top: 10px;">
+                <input placeholder="Click or tap to choose and change your avatar..." name="avatarImg" type="file" class="custom-file-input" id="avatarImg">
+                <label class="custom-file-label" value="" for="customFile">Click or tap to choose and change your avatar...</label>
+            </div>
+            <img class="mr-2" src="{{ \Auth::user()->avatar }}" alt="" alt="Your avatar">
+            <br />
+            <button type="submit" class="">Save change</button>
+            <hr />
+            <button onclick="history.go(-1)" type="submit" class="">Back</button>
         </form>
     </main>
 </div>

@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email', 'password', 'avatar', 
     ];
 
     /**
@@ -77,6 +77,7 @@ class User extends Authenticatable
         $fan->star_id = $uid;
         // 删除
         return $this->stars()->delete($fan);
+        // 以上操作不起作用, 或者说, 会在fans 表中删掉fan_id 为当前用户id 的一切记录
     }
     */
     public function doUnFan($star_uid, $user_id) {
@@ -88,11 +89,12 @@ class User extends Authenticatable
         //return dd($this->stars()); //->where('star_id', '=', 2);
         //$result = DB::delete("select * from fans where fan_id = ".$user_id." and star_id = ".$star_uid.";");
         //dd($result);
+        // 以上的数据库操作不起作用, 或者说, 会在fans 表中删掉fan_id 为当前用户id 的一切记录
         $result = DB::table('fans')->where([
             ['fan_id', $user_id], 
             ['star_id', $star_uid], 
             ])->delete();
-        return dd($result);
+        return $result;
     }
 
     // 当前用户是否被某uid 关注

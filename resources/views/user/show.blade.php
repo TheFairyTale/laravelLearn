@@ -6,7 +6,6 @@
     <div class="mdui-col-xs-12">
         <div class="mdui-card">
             <div class=" " style="padding: 24px 16px 16px 16px">
-                <!-- https://storage.live.com/Users/8755950069697370916/MyProfile/ExpressionProfile/ProfilePhoto:Win8Static,UserTileMedium,UserTileStatic -->
                 <img id="userCardImg" class="mdui-img-circle mdui-center" src="{{ $user->avatar }}" />
                 <h1 style="width: 100%" class="mdui-center mdui-text-center">{{ $user->name }}</h1>
                 <div class="mdui-center mdui-text-center">
@@ -15,17 +14,19 @@
 
                     @if ( \Auth::check() )
                     @if ( \Auth::user()->id == $user->id )
-                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onclick="" type="">Edit profile</button>
+                    <a href="/user/me/setting"><button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onclick="" type="">Edit profile</button></a>
                     @else
 
-                        @if ( \Auth::user()->hasStar($user->id) != 1 )
-                        <!-- hasn't followed -->
-                        <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onclick="" type="">Follow</button>
-                            @else
-                        <!-- has followed -->
-                        <!-- 尝试传入 token -->
-                        <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onclick="ajax('', '', csrf_token)" type="">Unfollow</button>
-                        @endif
+                    @if ( \Auth::user()->hasStar($user->id) != 1 )
+                    <!-- hasn't followed -->
+                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple follow-{{$user->id}}" onclick="ajax('/user/{{ $user->id }}/fan', '{{$user->id}}', csrf_token)" id="" type="">Follow</button>
+                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple mdui-hidden unfollow-{{$user->id}}" onclick="ajax('/user/{{ $user->id }}/unfan', '{{$user->id}}', csrf_token)" id="" type="">Unfollow</button>
+                    @else
+                    <!-- has followed -->
+                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple mdui-hidden follow-{{$user->id}}" onclick="ajax('/user/{{ $user->id }}/fan', '{{$user->id}}', csrf_token)" id="" type="">Follow</button>
+                    <!-- 尝试传入 token -->
+                    <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple unfollow-{{$user->id}}" onclick="ajax('/user/{{ $user->id }}/unfan', '{{$user->id}}', csrf_token)" id="" type="">Unfollow</button>
+                    @endif
 
                     @endif
                     @endif
@@ -50,16 +51,16 @@
                                         {{ $article->title }}
                                     </div>
                                     <div class="mdui-list-item-text mdui-list-item-two-line" style="line-break: anywhere; -webkit-line-break: anywhere; display:block;" id="{{ $article->id }}">
-                                        <script>
-                                            var filterHTMLTags = function() {
-                                                var content = "{{ $article->content }}"
-                                                var regular_expressions = /&../g
-                                                content.replace(regular_expressions, '')
-                                                document.getElementById("{{ $article->id }}").innerText = content
-                                            }
-                                            filterHTMLTags()
-                                        </script>
+                                        {{ $article->content }}
                                     </div>
+                                    <script>
+                                        var filterHTMLTags = function() {
+                                            var content = document.getElementById("{{ $article->id }}").innerText
+                                            content.replace(/<[a-z]*| /, '')
+                                            document.getElementById("{{ $article->id }}").innerText = content
+                                        }
+                                        filterHTMLTags()
+                                    </script>
                                     <div class="mdui-list-item-text mdui-list-item-one-line mdui-text-right">
                                         {{ $article->created_at->diffForHumans() }}
                                     </div>
@@ -83,22 +84,21 @@
                     <ul class="mdui-list">
                         @foreach($susers as $SFuser)
                         <li class="mdui-list-item " style="width: 100%;">
-                            <div style="display: contents;">
-                                <a class="padding-for-avatar" href="/user/{{ $SFuser->id }}" style="">
-                                    <div class="mdui-list-item-avatar"><img src="{{ $SFuser->avatar }}" /></div>
-                                </a>
-                                <div class="mdui-list-item-content" style="width: 100%;">
-                                    <a class="" href="/user/{{ $SFuser->id }}">
-                                        <div class="mdui-list-item-title">{{ $SFuser->name }}</div>
-                                        <div class="mdui-list-item-text mdui-list-item-one-line">
-                                            Following:{{ $SFuser->stars_count }} Fans:{{ $SFuser->fans_count }} Articles:{{ $SFuser->posts_count }}
-                                        </div>
-                                    </a>
-                                    <!-- follow & unfollow btn -->
-                                    <div class="mdui-valign" style="">
-                                        @include("user/badges/fan")
+
+                            <a class="padding-for-avatar" href="/user/{{ $SFuser->id }}" style="">
+                                <div class="mdui-list-item-avatar"><img src="{{ $SFuser->avatar }}" /></div>
+                            </a>
+                            <div class="mdui-list-item-content" style="width: 100%;">
+                                <a class="" href="/user/{{ $SFuser->id }}">
+                                    <div class="mdui-list-item-title">{{ $SFuser->name }}</div>
+                                    <div class="mdui-list-item-text mdui-list-item-one-line">
+                                        Following:{{ $SFuser->stars_count }} Fans:{{ $SFuser->fans_count }} Articles:{{ $SFuser->posts_count }}
                                     </div>
-                                </div>
+                                </a>
+                            </div>
+                            <!-- follow & unfollow btn -->
+                            <div class="mdui-valign" style="">
+                                @include("user/badges/follow")
                             </div>
                         </li>
 
@@ -121,7 +121,9 @@
                                 </a>
                             </div>
                             <!-- follow & unfollow btn -->
-
+                            <div class="mdui-valign" style="">
+                                @include("user/badges/follow")
+                            </div>
                         </li>
 
                         <li class="mdui-divider-inset mdui-m-y-0"></li>
