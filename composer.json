@@ -15,8 +15,7 @@
         "laravel/scout": "^7.0",
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
-        "tamayo/laravel-scout-elastic": "^5.0",
-        "elasticquent/elasticquent": "dev-master"
+        "tamayo/laravel-scout-elastic": "^5.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -28,7 +27,8 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "secure-http": true
     },
     "extra": {
         "laravel": {
