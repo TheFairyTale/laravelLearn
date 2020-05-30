@@ -25,12 +25,21 @@ class PostControllers extends Controller
         $posts = Post::orderBy('created_at', 'desc')->withCount(['comments', 'zans'])->paginate(9);
         $request = request();
 
+        // 推荐文章功能
+        // 排序点赞最多的页面排在最前, 输出前5 篇
+        //$post = new Post();
+        //$post->zan()->orderBy('post_id', 'desc');
+        // 关联post 表中id 到zans 表中post_id 
+        
+        // TODO 完成 "推荐文章" 处的代码
+        //$zans = Zan::
+
 
         //要传递的参数名尽量和参数名一致 (不理解算了)
         //使用compact 传递到页面上
         return view("post/index", compact(['posts', 'request']));
     }
-    //详情界面
+    // 详情界面
     // TODO 此处传参的原理究竟是什么？
     public function show(Post $post)
     {
@@ -49,8 +58,8 @@ class PostControllers extends Controller
     //创建界面的逻辑
     public function store()
     {
-        //TODO: 用户权限验证
-        //对于表单传递，不要相信任何从前端传递过来的参数
+        // TODO: 用户权限验证
+        // 对于表单传递，不要相信任何从前端传递过来的参数
 
         //此处是验证操作(1)
         $this->validate(request(), [
@@ -131,6 +140,7 @@ class PostControllers extends Controller
     {
         //TODO: 用户权限验证
 
+        return "图片上传不可用。";
         //dd(request()->all());
         $req = request()->all();
         // return 0 => "fileName"
@@ -193,7 +203,8 @@ class PostControllers extends Controller
     }
 
     // Search result
-    public function search(Post $post) {
+    public function search(Post $post)
+    {
         return view("post/search", compact('post'));
     }
 }

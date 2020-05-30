@@ -46,7 +46,7 @@
             <ul class="mdui-list">
                 <a href="/user/{{ $post->user->id }}" target="_blank">
                     <li class="mdui-list-item mdui-ripple">
-                        <div class="mdui-list-item-avatar"><img src="https://i1.hdslb.com/bfs/face/f469b49f73ee48147d0801b63f220a830dd051f6.jpg_64x64.jpg" />
+                        <div class="mdui-list-item-avatar"><img src="{{ $post->user->avatar }}" />
                         </div>
                         <div class="mdui-list-item-content">
                             <div class="mdui-list-item-title">{{ $post->user->name }}</div>
@@ -171,7 +171,7 @@
             </div>
             @include('layout/error')
             <div class="mdui-card-header" style="height: auto; padding: 16px 0 0 16px;">
-                <img class="mdui-card-header-avatar" src="\Auth::user()->avatar" />
+                <img class="mdui-card-header-avatar" src="{{ \Auth::user()->avatar }}" />
             </div>
             <div class="" style="margin: 0 16px 16px 52px; padding: 0 0 28px 16px;">
                 <form action="/posts/{{ $post->id }}/comment" method="POST">

@@ -13,7 +13,7 @@
                     <p>Following: {{ $user->stars_count }} Fans: {{ $user->fans_count }} Articles: {{ $user->posts_count }} </p>
 
                     @if ( \Auth::check() )
-                    @if ( \Auth::user()->id == $user->id )
+                    @if ( \Auth::id() == $user->id )
                     <a href="/user/me/setting"><button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onclick="" type="">Edit profile</button></a>
                     @else
 
