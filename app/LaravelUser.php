@@ -2,6 +2,7 @@
 
 namespace App;
 
+// 继承时使用App/Model
 use App\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\DB;
 
+// 表users
 class User extends Authenticatable
 {
     use Notifiable;

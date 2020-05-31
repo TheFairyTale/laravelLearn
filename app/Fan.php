@@ -2,10 +2,12 @@
 
 namespace App;
 
+// 继承时使用App/Model
 //use Illuminate\Database\Eloquent\Model;
 // "App\Model" 可用于数据注入
 use App\Model;
 
+// 表fans
 class Fan extends Model
 {
     // fan user

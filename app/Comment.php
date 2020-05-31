@@ -2,8 +2,10 @@
 
 namespace App;
 
+// 继承时使用App/Model
 use App\Model;
 
+// 表comments
 class Comment extends Model
 {
     // 第七章, 不理解
