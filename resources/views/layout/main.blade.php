@@ -4,7 +4,8 @@
 @include("layout.head")
 
 <body id="body" class="mdui-appbar-with-toolbar ">
-    @include("layout.header")
+    @extends("layout.header")
+    @section('siteTitle', 'LiteArticle')
 
     <div class="mdui-container">
         <!-- 页面主体 -->
@@ -218,6 +219,24 @@
         // 为页面加上颜色
         $$('body').addClass('mdui-theme-accent-blue')
         $$('body').addClass('mdui-theme-primary-blue')
+    </script>
+    @if ( \Auth::check())
+    <script>
+        var userName = "{{ \Auth::user()->name }}"
+        var userCenter = "/user/{{ \Auth::user()->id }}"
+    </script>
+    @else
+    <script>
+        var userName = "Guest"
+        var userCenter = "/"
+    </script>
+    @endif
+    <script>
+        var title = "Welcome, " + userName
+        window.onload = function() {
+            document.getElementById("pageTitle").text = title
+            document.getElementById("pageTitle").href = userCenter
+        }
     </script>
 </body>
 

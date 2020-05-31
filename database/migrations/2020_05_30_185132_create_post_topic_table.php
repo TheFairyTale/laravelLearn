@@ -13,8 +13,12 @@ class CreatePostTopicTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_topic', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('post_topics', function (Blueprint $table) {
+            $table->increments('id');
+            // 设置default() 默认值是一种好习惯.
+            $table->integer('post_id')->default(0);
+            $table->integer('topic_id')->default(0);
+            // create_at update_at
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreatePostTopicTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_topic');
+        Schema::dropIfExists('post_topics');
     }
 }

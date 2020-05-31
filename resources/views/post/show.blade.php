@@ -1,5 +1,4 @@
 @extends("layout.main")
-
 @section("content")
 <style>
     p>iframe {
@@ -103,7 +102,7 @@
             </div>
             <div class="mdui-card-header">
                 <a class="comment-author" href="/user/{{ $comment->user->id }}" target="_blank">
-                    <img class="mdui-card-header-avatar" src="/user/{{ $post->user->avatar }}" />
+                    <img class="mdui-card-header-avatar" src="{{ $comment->user->avatar }}" />
                     <div class="mdui-card-header-title">{{ $comment->user->name }}</div>
                 </a>
                 <div class="mdui-card-header-subtitle">{{ $comment->created_at }}</div>

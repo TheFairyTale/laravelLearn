@@ -1,7 +1,7 @@
 <?php
 //Route::get('/', '[Controller]@[Behavior/Function]');
 // 添加缓存控制
-Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function () {
+//Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function () {
     // 全局资源获取
     /* Route::get('/storage/{resourceName}', function(Request $request) {
         //return header('Cache-Control', 'public');
@@ -65,4 +65,4 @@ Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function (
     Route::get('/user/me/setting', '\App\Http\Controllers\UserController@setting');
     // User setting action
     Route::post('/user/me/setting', '\App\Http\Controllers\UserController@settingStore');
-});
+//});

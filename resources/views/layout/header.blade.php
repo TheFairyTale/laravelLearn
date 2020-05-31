@@ -3,8 +3,9 @@
         <!--
             <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">&#xe5d2;</i></a>
             -->
-        <a href="/" class="mdui-typo-headline mdui-hidden-sm-down">The article website</a>
-        <a href="/" class="mdui-typo-title">Main page</a>
+
+        <a href="/" class="mdui-typo-headline mdui-hidden-sm-down">@yield('siteTitle')</a>
+        <a href="/" class="mdui-typo-title" id="pageTitle"></a>
         <div class="mdui-toolbar-spacer"></div>
         <!-- Search code here -->
 
@@ -67,9 +68,6 @@
 
                             <li class="mdui-menu-item">
                                 <a href="/posts/create" class="mdui-ripple">Create Article</a>
-                            </li>
-                            <li class="mdui-menu-item">
-                                <a href="javascript:;" class="mdui-ripple">View all articles</a>
                             </li>
                             <li class="mdui-divider"></li>
                         @endif

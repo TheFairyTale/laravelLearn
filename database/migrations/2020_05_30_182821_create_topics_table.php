@@ -14,7 +14,10 @@ class CreateTopicsTable extends Migration
     public function up()
     {
         Schema::create('topics', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
+            // 专题名称
+            $table->string('name', 32);
+            // create_at update_at
             $table->timestamps();
         });
     }

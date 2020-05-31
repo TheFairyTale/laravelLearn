@@ -135,8 +135,8 @@
             <br />
             <button type="submit" class="">Save change</button>
             <hr />
-            <button onclick="history.go(-1)" type="submit" class="">Back</button>
         </form>
+        <button onclick="history.go(-1)" type="submit" class="">Back</button>
     </main>
 </div>
 @endsection
