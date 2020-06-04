@@ -40,7 +40,7 @@
         <div class="mdui-col-md-3 mdui-hidden-sm-down" style="padding: 16px;">
             <div>热门文章</div>
 
-            <div>副列, 展示更多琐碎内容</div>
+            <div>最新评论</div>
         </div>
     </div>
     <div class=" mdui-col-xs-12" style="padding: 16px 0;">

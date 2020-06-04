@@ -4,6 +4,8 @@
 /storage/*.key
 /vendor
 /MDUI
+/.vscode
+/.idea
 .env
 .env.backup
 .phpunit.result.cache

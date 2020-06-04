@@ -88,39 +88,6 @@
         }
     </script>
     <script>
-        var E = window.wangEditor
-
-        var editor = new E('#editDiv')
-        //var editor = new E(document.getElementById('editDiv'))
-        // 开启粘贴样式的过滤
-        editor.customConfig.pasteFilterStyle = true
-
-        var textArea = $('#editor')
-        editor.customConfig.onchange = function(html) {
-            // 监控变化，同步更新到 textarea
-            textArea.val(html)
-        }
-
-        // 关闭上传图片功能并设置为base64 存储
-        editor.customConfig.uploadImgShowBase64 = false
-        // 配置服务器端地址
-        editor.customConfig.uploadImgServer = '/image/upload'
-        // 限制图片上传大小为3Mb 
-        editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024
-        // 限制一次最多上传 5 张图片
-        editor.customConfig.uploadImgMaxLength = 10
-        //固定上传的文件名
-        //editor.customConfig.uploadFileName = 'articlesImage'
-        // 自定义header 
-        editor.customConfig.uploadImgHeaders = {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-
-        editor.create()
-        // 初始化 textarea 的值
-        textArea.val(editor.txt.html)
-    </script>
-    <script>
         // 页面脚本
         var $$ = mdui.JQ;
 
@@ -233,10 +200,45 @@
     @endif
     <script>
         var title = "Welcome, " + userName
+    </script>
+    <script>
+        var E = window.wangEditor
+
+        var editor = new E('#editDiv')
+        //var editor = new E(document.getElementById('editDiv'))
+        // 开启粘贴样式的过滤
+        editor.customConfig.pasteFilterStyle = true
+
+        var textArea = $('#editor')
+        editor.customConfig.onchange = function(html) {
+            // 监控变化，同步更新到 textarea
+            textArea.val(html)
+        }
+
+        // 关闭上传图片功能并设置为base64 存储
+        editor.customConfig.uploadImgShowBase64 = false
+        // 配置服务器端地址
+        editor.customConfig.uploadImgServer = '/image/upload'
+        // 限制图片上传大小为3Mb 
+        editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024
+        // 限制一次最多上传 5 张图片
+        editor.customConfig.uploadImgMaxLength = 10
+        //固定上传的文件名
+        //editor.customConfig.uploadFileName = 'articlesImage'
+        // 自定义header 
+        editor.customConfig.uploadImgHeaders = {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    </script>
+    <script>
         window.onload = function() {
             document.getElementById("pageTitle").text = title
             document.getElementById("pageTitle").href = userCenter
         }
+        editor.create()
+        // 初始化 textarea 的值
+        editor.txt.html(document.getElementById('editor').innerText)
+        textArea.val(editor.txt.html())
     </script>
 </body>
 

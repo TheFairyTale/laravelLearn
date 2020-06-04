@@ -65,4 +65,9 @@
     Route::get('/user/me/setting', '\App\Http\Controllers\UserController@setting');
     // User setting action
     Route::post('/user/me/setting', '\App\Http\Controllers\UserController@settingStore');
+
+    // Post topic page
+    Route::get('/topic/{topic}', '\App\Http\Controllers\TopicController@show');
+    // Add new topic
+    Route::post('/topic/{topic}/submit', '\App\Http\Controllers\TopicController@submit');
 //});
