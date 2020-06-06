@@ -6,7 +6,7 @@
 Then in root dir run:
 `composer install`
 2. Rename `.env.example` to `.env` in project root dir, then change the DB options
-3. Run commend `php artisan key:generate` to generate app key.
+3. Run command `php artisan key:generate` to generate app key.
 4. When completed:
 `php artisan migrate:fresh`
 ## Run
